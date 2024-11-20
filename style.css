@@ -1,0 +1,107 @@
+html{
+    height: 100%;
+}
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    font-family: sans-serif;
+    height: 100%;
+    color: #232323;
+    background: linear-gradient(330deg,rgb(222, 14, 14),rgb(249, 172, 29),rgb(252, 252, 18),rgb(27, 27, 240));
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container{
+    height: 540px;
+
+    background-color: rgb(255, 255, 255, .75);
+    color: #232323;
+    border: 1px solid rgba(0,0,0,.1);
+    border-radius: 1rem;
+    box-shadow: 2px 3px 5px rgba(0,0,0,.3);
+
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+
+    padding: 20px 35px;
+    flex-basis: 400px;
+}
+
+.screen{
+    width: 320px;
+    font-size: 30px;
+    text-align: end;
+    border: 1px solid rgba(0,0,0,.1);
+    border-radius: 1rem;
+
+    padding: 15px;
+    overflow: auto;
+
+    backdrop-filter: blur(5.5px);
+    -webkit-backdrop-filter: blur(5.5px);
+}
+
+.cal-button-row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin: 15px auto;
+}
+
+.cal-button{
+    font-family: inherit;
+    font-size: 20px;
+    height: 65px;
+
+    background-color: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(35, 35, 35,.1);
+    border-radius: 1rem;
+    box-shadow: 0px 5px 30px rgba(35, 35, 35, .1);
+
+    flex-basis: 20%;
+
+    backdrop-filter: blur(5.5px);
+    -webkit-backdrop-filter: blur(5.5px);
+    cursor: pointer;
+}
+
+.cal-button:last-child{
+    background: rgb(245, 119, 16);
+    color: #000;
+    border: 1px solid rgba(35, 35, 35,.1);
+    border-radius: 1rem;
+    box-shadow: 0px 5px 30px rgba(35, 35, 35, .1);
+
+    backdrop-filter: blur(5.5px);
+    -webkit-backdrop-filter: blur(5.5px);
+
+}
+
+/* .cal-button:not(:last-child):hover{
+    background-color: rgba(246, 240, 240, 0.75);
+} */
+
+.cal-button:last-child:active{
+    background-color: rgb(242, 146, 68);
+}
+
+.cal-button:active{
+    background-color: rgba(240, 240, 240, 0.3);
+}
+
+.cal-button.double{
+    flex-basis: 47%;
+}
+
+.cal-button.triple{
+    flex-basis: 45%;
+}
