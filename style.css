@@ -12,7 +12,7 @@ body{
     font-family: sans-serif;
     height: 100%;
     color: #232323;
-    background: linear-gradient(330deg,rgb(222, 14, 14),rgb(249, 172, 29),rgb(252, 252, 18),rgb(27, 27, 240));
+    background-color: #ccc;
 
     display: flex;
     align-items: center;
@@ -96,10 +96,6 @@ body{
 
 .cal-button:active{
     background-color: rgba(240, 240, 240, 0.3);
-}
-
-.cal-button.double{
-    flex-basis: 47%;
 }
 
 .cal-button.triple{
