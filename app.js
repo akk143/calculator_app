@@ -7,11 +7,20 @@ let operator = null;
 const updatescreen = function(value){
 
     if(value === 'Error'){
+
         getscreen.textContent = value + '!';
         getscreen.style.color = 'red';
+
+    }else if(previnput && operator){
+
+        getscreen.textContent = `${previnput} ${operator} ${curinput || ''}`;
+        getscreen.style.color = 'black';
+
     }else{
+
         getscreen.textContent = value || 0;
         getscreen.style.color = 'black';
+        
     }
 }
 
@@ -33,15 +42,15 @@ const handlebtn = (e) => {
 
     }else if(btnval === '←'){
         
-        curinput = curinput.slice(0,-1);
+        curinput = curinput.toString().slice(0,-1);
         updatescreen(curinput || 0);
 
-    }else if(['÷', '×', '-', '+', '%'].includes(btnval)){
+    }else if(['÷', '×', '−', '+', '%'].includes(btnval)){
 
         if(curinput){
 
             if(previnput && operator){
-                curinput = calculate(previnput, curinput, operator);
+                curinput = calculate(previnput, curinput, operator).toString();
             }
             operator = btnval;
             previnput = curinput;
@@ -50,6 +59,8 @@ const handlebtn = (e) => {
         }else if(previnput) {
             operator = btnval;
         }
+
+        updatescreen();
 
     }else if(btnval === '.'){
 
@@ -102,7 +113,7 @@ const calculate = (num1, num2, operator) => {
             return b === 0 ? 'Error' : (a / b);
         case '×':
             return (a * b);
-        case '-':
+        case '−':
             return (a - b);
         case '+':
             return (a + b);
