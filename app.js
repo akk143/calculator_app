@@ -1,8 +1,10 @@
 const getscreen = document.querySelector('.screen');
+const clearallbtn = document.querySelector('.clearall');
 
 let curinput = '';
 let previnput = '';
 let operator = null;
+let resultdisplay = false;
 
 const updatescreen = function(value){
 
@@ -38,28 +40,53 @@ const handlebtn = (e) => {
         curinput = '';
         previnput = '';
         operator = null;
+
+        resultdisplay = false;
+
         updatescreen('');
+        toggleClearAll();
 
     }else if(btnval === '←'){
         
-        curinput = curinput.toString().slice(0,-1);
-        updatescreen(curinput || 0);
+        if(curinput){
+
+            // If there is input in the current value, delete the last digit of the current number
+            curinput = curinput.toString().slice(0, -1);
+            updatescreen(curinput || 0);
+
+        }else if(operator && previnput){
+
+            // If the operator exists, remove the operator and display the previous input
+            operator = null;
+            updatescreen(previnput);
+
+        }else if(previnput){
+
+            // If there’s no curinput and no operator, start removing digits from the previnput
+            previnput = previnput.toString().slice(0, -1);
+            updatescreen(previnput || 0);
+
+        }
+
+        toggleClearAll();
 
     }else if(['÷', '×', '−', '+', '%'].includes(btnval)){
 
         if(curinput){
 
+            // If there is curinput, calculate and store the result
             if(previnput && operator){
                 curinput = calculate(previnput, curinput, operator).toString();
             }
+
             operator = btnval;
             previnput = curinput;
+            resultdisplay = false;
             curinput = '';
 
-        }else if(previnput) {
-            operator = btnval;
+        }else if(previnput){
+            operator = btnval;            // If there is a previnput, just set the operator
         }
-
         updatescreen();
 
     }else if(btnval === '.'){
@@ -68,7 +95,9 @@ const handlebtn = (e) => {
             curinput = curinput || '0';
             curinput += '.';
         }
+
         updatescreen(curinput);
+        toggleClearAll();
 
     }else if(btnval === '='){
 
@@ -77,26 +106,48 @@ const handlebtn = (e) => {
             curinput = calculate(previnput, curinput, operator);
             previnput = '';
             operator = null;
-            updatescreen(curinput);
 
+            resultdisplay = true;
+
+            updatescreen(curinput);
         }
+
+        toggleClearAll();
 
     }else{
 
         if(btnval === '0' && curinput === '0'){
-            return;
+            return;                       // Don't allow multiple zeros
         }
-
         if(curinput === '0' && btnval !== '.'){
-            curinput = btnval;
-        } else {
-            curinput += btnval;
+            curinput = btnval;            // Replace zero if a non-zero number is pressed
+            
+        }else{
+            curinput += btnval;           // Add digit to the current input
         }
 
+        resultdisplay = false;
         updatescreen(curinput);
+        toggleClearAll();
+
     }
 
-}
+};
+
+
+
+// Toggle the clearall button to show "←" or "C"
+const toggleClearAll = () => {
+
+    if(resultdisplay || (!curinput && !previnput)){
+        clearallbtn.textContent = 'C';    // If there's no input or result, show "C"
+
+    }else{
+        clearallbtn.textContent = '←';    // Otherwise, show "←"
+    }
+
+};
+
 
 
 const calculate = (num1, num2, operator) => {

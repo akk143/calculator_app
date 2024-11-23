@@ -3,6 +3,7 @@
 <head>
     <title>Calculator App</title>
     <link href="./style.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
 
@@ -11,8 +12,8 @@
         <section class="screen">0</section>
         
             <div class="cal-button-row">
-                <button type="button" class="cal-button double">C</button>
-                <button type="button" class="cal-button">&larr;</button>
+                <button type="button" class="cal-button clearall">C</button>
+                <button type="button" class="cal-button">+/-</button>
                 <button type="button" class="cal-button">%</button>
                 <button type="button" class="cal-button">&divide;</button>
             </div>
@@ -39,6 +40,13 @@
             </div>
 
             <div class="cal-button-row">
+                <button type="button" class="cal-button">
+                    <i class="fa-solid fa-calculator"></i>
+                    <ul style="display: none;">
+                        <li>Basic</li>
+                        <li>Scientist</li>
+                    </ul>
+                </button>
                 <button type="button" class="cal-button">0</button>
                 <button type="button" class="cal-button">.</button>
                 <button type="button" class="cal-button">&equals;</button>
