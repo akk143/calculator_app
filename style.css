@@ -101,3 +101,50 @@ body{
 .cal-button.triple{
     flex-basis: 45%;
 }
+
+.cal-button.plus_minus{
+    font-size: 22px;
+    font-weight: 400;
+}
+
+
+.cal-button ul{
+    width: 120px;
+    font-size: 15px;
+    background-color: #fff;
+    list-style-type: none;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 8px;
+    box-shadow: 0px 5px 15px rgba(0,0,0,0.1);
+
+    display: none;
+
+    padding: 5px;
+    margin: 0;
+
+    position: absolute;
+    top: 120px;
+    right: -40px;
+
+    z-index: 10; 
+}
+
+
+.cal-button ul li{
+    cursor: pointer;
+}
+
+.cal-button ul li a{
+    color: #000;
+    text-decoration: none; 
+    
+    display: block;
+
+    padding: 8px;
+}
+
+.cal-button ul li a:hover{
+    background-color: #3c69d9;
+    color: #fff;
+    border-radius: 8px;
+}

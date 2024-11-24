@@ -1,5 +1,8 @@
 const getscreen = document.querySelector('.screen');
 const clearallbtn = document.querySelector('.clearall');
+const getcalbuttons = document.querySelectorAll('.cal-button');
+// console.log(getcalbuttons);  // Node List
+
 
 let curinput = '';
 let previnput = '';
@@ -15,7 +18,7 @@ const updatescreen = function(value){
 
     }else if(previnput && operator){
 
-        getscreen.textContent = `${previnput} ${operator} ${curinput || ''}`;
+        getscreen.textContent = `${previnput} ${operator} ${curinput.startsWith('-') ? `(${curinput})` : curinput || ''}`;
         getscreen.style.color = 'black';
 
     }else{
@@ -87,13 +90,43 @@ const handlebtn = (e) => {
         }else if(previnput){
             operator = btnval;            // If there is a previnput, just set the operator
         }
+
         updatescreen();
+
+    }else if(btnval === '+/-'){
+
+        if(curinput){
+
+            // toggle the curinput
+            curinput = curinput.toString().startsWith('-') ? curinput.toString().slice(1) : '-' + curinput;
+
+        }else if(previnput && !curinput && !resultdisplay){
+
+            // if no curinput, toggle the previnput
+            previnput = previnput.toString().startsWith('-') ? previnput.toString().slice(1) : '-' + previnput;
+
+        }else if(resultdisplay){
+
+            // if resultdisplay, toggle the result
+            curinput = getscreen.textContent.toString().startsWith('-') ? getscreen.toString().textContent.slice(1) : '-' + getscreen.textContent;
+            resultdisplay = false;
+
+        }
+
+        updatescreen(curinput || previnput);
 
     }else if(btnval === '.'){
 
-        if(!curinput.includes('.')){
+        if(resultdisplay){
+
+            curinput += ".";
+            resultdisplay = false;
+
+        }else if(!curinput.includes('.')){
+
             curinput = curinput || '0';
             curinput += '.';
+
         }
 
         updatescreen(curinput);
@@ -181,3 +214,97 @@ const calculate = (num1, num2, operator) => {
 document.querySelectorAll('.cal-button').forEach((btn) => {
     btn.addEventListener('click',handlebtn);
 }); 
+
+
+
+document.addEventListener('keydown', function(e){
+
+    let key = e.key;
+    console.log(key);
+
+
+    if('0123456789'.includes(key)){
+
+        const nums = Array.from(getcalbuttons).find(num => num.textContent === key);
+        // console.log(nums);
+        if(nums) nums.click();
+        
+    }
+
+
+    if('+-×÷'.includes(key)){
+
+        let operatorMap = {
+            '+': '+',
+            '-': '−',
+            '*': '×',  
+            '/': '÷' 
+        };
+
+        const operatorSymbol = operatorMap[key] || key;
+        const operatorBtn = Array.from(getcalbuttons).find(btn => btn.textContent === operatorSymbol);
+        if(operatorBtn) operatorBtn.click();
+
+    }
+
+
+    // Ensure Shift key handling for *
+    if(key === '*' && e.shiftKey){
+        const operatorBtn = Array.from(getcalbuttons).find(btn => btn.textContent === '×');
+        if(operatorBtn) operatorBtn.click();
+    }
+
+
+    // Handle enter or "=" key
+    if(key === 'Enter' || key === '='){
+        const equalButton = Array.from(getcalbuttons).find(btn => btn.textContent === '=');
+        if(equalButton) equalButton.click();
+    }
+
+
+    // Handle backspace key
+    if(key === 'Backspace'){
+        const backspaceButton = Array.from(getcalbuttons).find(btn => btn.textContent === '←');
+        if(backspaceButton) backspaceButton.click();
+    }
+
+
+    // Handle clear Escape
+    if(key === 'Escape'){
+        const clearButton = Array.from(getcalbuttons).find(btn => btn.textContent === 'C');
+        if(clearButton) clearButton.click();
+    }
+
+
+    // Handle dot key (.)
+    if(key === '.'){
+        const dotButton = Array.from(getcalbuttons).find(btn => btn.textContent === '.');
+        if(dotButton) dotButton.click();
+    }
+
+    // Handle dot key (/)
+    if(key === '/' && !e.shiftKey){
+        const operatorBtn = Array.from(getcalbuttons).find(btn => btn.textContent === '÷');
+        if(operatorBtn) operatorBtn.click();
+    }
+    
+});
+
+
+
+document.querySelector('.fa-calculator').addEventListener('click', function() {
+    const dropdown = this.nextElementSibling;
+    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+});
+
+
+// let n = 5;
+// let string = "";
+// for (let i = 1; i <= n; i++){
+//   for (let j = 0; j < i; j++){
+//     string += "*";
+//   }
+//   string += "\n";
+// }
+// console.log(string);
+
